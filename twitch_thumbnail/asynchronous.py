@@ -46,10 +46,12 @@ async def download_thumbnail(
 
     ts_url = await get_ts_url(stream)
 
-    await asyncio.create_subprocess_shell(
+    proc = await asyncio.create_subprocess_shell(
         _make_ffmpeg_args(ts_url, path, join=True),
         stderr=asyncio.subprocess.DEVNULL,
         stdout=asyncio.subprocess.DEVNULL,
     )
+
+    await proc.communicate()
 
     return stream
