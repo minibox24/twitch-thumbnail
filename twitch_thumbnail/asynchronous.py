@@ -39,10 +39,13 @@ async def get_ts_url(
 
 
 async def download_thumbnail(
-    channel: str, path: str, stream: Optional[str] = None
+    channel: str,
+    path: str,
+    stream: Optional[str] = None,
+    twitch_oauth: Optional[str] = None,
 ) -> str:
     if stream is None:
-        stream = await asyncio.to_thread(get_stream_url, channel)
+        stream = await asyncio.to_thread(get_stream_url, channel, twitch_oauth)
 
     ts_url = await get_ts_url(stream)
 

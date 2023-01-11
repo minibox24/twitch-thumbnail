@@ -1,5 +1,6 @@
 from typing import Optional
 
+from streamlink.exceptions import PluginError
 from streamlink.plugins.twitch import (
     Twitch,
     TwitchAPI,
@@ -10,10 +11,10 @@ from streamlink.plugins.twitch import (
 )
 from streamlink.session import Streamlink
 
-from .exceptions import NoStreamError
+from .exceptions import AuthError, NoStreamError
 
 
-def get_stream_url(channel: str) -> str:
+def get_stream_url(channel: str, twitch_oauth: Optional[str] = None) -> str:
     session = Streamlink()
     api = TwitchAPI(session)
     usher = UsherService(session)
@@ -25,7 +26,14 @@ def get_stream_url(channel: str) -> str:
         }
     )
 
-    sig, token = api.access_token(True, channel)
+    if twitch_oauth:
+        session.http.headers.update({"Authorization": f"OAuth {twitch_oauth}"})
+
+    try:
+        sig, token = api.access_token(True, channel)
+    except PluginError:
+        raise AuthError
+
     url = usher.channel(channel, sig=sig, token=token, fast_bread=True)
 
     try:

@@ -37,9 +37,14 @@ def get_ts_url(
     raise AttemptsExceededError(max_try)
 
 
-def download_thumbnail(channel: str, path: str, stream: Optional[str] = None) -> str:
+def download_thumbnail(
+    channel: str,
+    path: str,
+    stream: Optional[str] = None,
+    twitch_oauth: Optional[str] = None,
+) -> str:
     if stream is None:
-        stream = get_stream_url(channel)
+        stream = get_stream_url(channel, twitch_oauth)
     ts_url = get_ts_url(stream)
 
     subprocess.run(

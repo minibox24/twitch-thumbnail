@@ -12,3 +12,7 @@ class AttemptsExceededError(Exception):
 
     def __str__(self):
         return f"Exceeded {self.attempts} attempts."
+
+
+class AuthError(Exception):
+    pass

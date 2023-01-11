@@ -31,3 +31,15 @@ async def main():
 
 asyncio.run(main())
 ```
+
+## Twitch OAuth Token
+
+https://twitch.tv -> Devtools Console
+
+```js
+document.cookie.split("; ").find((item) => item.startsWith("auth-token="))?.split("=")[1];
+```
+
+```py
+download_thumbnail("woowakgood", "thumbnail.png", twitch_oauth="your-personal-oauth-token")
+```
