@@ -10,7 +10,7 @@ with open(f"README.md", encoding="UTF-8") as f:
 
 setup(
     name="twitch-thumbnail",
-    version="1.1.0",
+    version="1.1.1",
     description="Download Twitch channel thumbnail",
     author="Minibox",
     author_email="minibox724@gmail.com",
